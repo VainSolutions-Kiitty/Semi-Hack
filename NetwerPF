@@ -1,1 +1,35 @@
 
+-- NETWER PF MADE BY KIITTY
+
+ local cur = os.clock()
+ 
+ local rsRunner
+ 
+ for i,v in pairs(getconnections(game:GetService("RunService").RenderStepped)) do
+     if v.Function then
+         local taskManager = debug.getupvalues(v.Function)[1]
+         if type(taskManager) == "table" and rawget(taskManager, "_taskContainers") then
+             rsRunner = taskManager
+             break
+         end
+     end
+ end
+ 
+ local charStep = next(rsRunner._taskContainers.char.tasks).task
+ 
+ local pf = {}
+ pf.menu = debug.getupvalue(charStep, 27)
+ pf.sound = debug.getupvalue(charStep, 24)
+ pf.roundsystem = debug.getupvalue(charStep, 17)
+ pf.cframe = debug.getupvalue(charStep, 15)
+ pf.char = debug.getupvalue(charStep, 3)
+ pf.camera = debug.getupvalue(charStep, 2)
+ pf.network = debug.getupvalue(pf.char.setmovementmode, 20)
+ pf.hud = debug.getupvalue(pf.char.setmovementmode, 10)
+ pf.input = debug.getupvalue(pf.char.setmovementmode, 17)
+ pf.gamelogic = debug.getupvalue(pf.char.setsprint, 1)
+ pf.replication = debug.getupvalue(pf.hud.attachflag, 1)
+
+ 
+ 
+  return pf
