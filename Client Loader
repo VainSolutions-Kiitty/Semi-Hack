@@ -66,5 +66,5 @@ local client = {}; do
      if type(Client.Hud) == "table" and type(Client.Char) == "table" and type(Client.GameLogic) == "table" and type(Client.CharTable) == "table" and type(Client.Network) == "table" and type(Client.PFCam) == "table" and type(Client.Particle) == "table" and type(Client.Vector) == "table" and type(Client.Sound) == "table" and type(Client.Physics) == "table" and type(Client.Raycast) == "table" and type(Client.trajectory) == "function" and type(Client.loadgun) == "function" and type(Client.getupdater) == "function" and type(Client.KFunc) == "function" then
          break
      end
-     return Client
  end
+return Client
