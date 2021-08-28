@@ -1,0 +1,70 @@
+local client = {}; do
+    for i,v in pairs(getgc(true)) do
+        if (type(v) == "table") then
+            if rawget(v, "getbodyparts") then
+                client.chartable = debug.getupvalue(v.getbodyparts, 1)
+            end
+        end
+    end
+ end
+ 
+ game:GetService("RunService").RenderStepped:Connect(function()
+    for i,v in pairs(game.Players:GetPlayers()) do
+        if (v and client.chartable[v]) then
+            local char = client.chartable[v]
+            char.head.Parent.Name = v.Name
+            v.Character = char.head.Parent
+        end
+    end
+ end)
+ 
+ local Client = {}
+ for I,V in pairs(getgc(true)) do
+     if type(V) == "table" then
+         if rawget(V, "isplayeralive") then
+             Client.Hud = V
+         elseif rawget(V, "jump") then
+             Client.Char = V
+         elseif rawget(V, "gammo") then
+             Client.GameLogic = V
+         elseif rawget(V, "getbodyparts") then
+             Client.CharTable = getupvalue(V.getbodyparts, 1)
+         elseif rawget(V, "send") and rawget(V, "fetch") then
+             Client.Network = V
+         elseif rawget(V, "setswayspeed") and rawget(V, "isspectating") then
+            print("Returned Correct Camera")
+            Client.PFCam =  game.Workspace.Camera
+         elseif rawget(V, "new") and rawget(V, "reset") and rawget(V, "step") then
+             Client.Particle = V
+         elseif rawget(V, "setscale") and rawget(V, "getscale") then
+             Client.UIScaler = V
+         elseif rawget(V, "random") and rawget(V, "toanglesyx") and rawget(V, "slerp") then
+             Client.Vector = V
+         elseif rawget(V, "play") and rawget(V, "PlaySound") then
+             Client.Sound = V
+         elseif rawget(V, "timehit") then
+             Client.Physics = V
+         elseif rawget(V, "raycast") and rawget(V, "raycastSingleExit") then
+             Client.Raycast = V
+         end
+     elseif type(V) == "function" then
+         if islclosure(V) then
+             if getinfo(V).name == "trajectory" then
+                 Client.trajectory = V
+             elseif getinfo(V).name == "loadgun" then
+                 Client.loadgun = V
+             elseif getinfo(V).name == "getupdater" then
+                 Client.getupdater = V
+             else
+                 local Const = getconstants(V)
+                 if table.find(Const, "killfeed") and table.find(Const, "Dist: ") and table.find(Const, " studs") then
+                     Client.KFunc = V
+                 end
+             end
+         end
+     end
+     if type(Client.Hud) == "table" and type(Client.Char) == "table" and type(Client.GameLogic) == "table" and type(Client.CharTable) == "table" and type(Client.Network) == "table" and type(Client.PFCam) == "table" and type(Client.Particle) == "table" and type(Client.Vector) == "table" and type(Client.Sound) == "table" and type(Client.Physics) == "table" and type(Client.Raycast) == "table" and type(Client.trajectory) == "function" and type(Client.loadgun) == "function" and type(Client.getupdater) == "function" and type(Client.KFunc) == "function" then
+         break
+     end
+     return Client
+ end
